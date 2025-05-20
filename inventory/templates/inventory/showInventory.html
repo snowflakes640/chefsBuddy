@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Show inventory</title>
+</head>
+<body>
+    <h1> Currently in inventory: </h1>
+    <ul>
+        {% for item in items %}
+        <li> <strong>{{item.name}}: </strong> {{item.quantity}}{{item.unit}} - expires on {{item.expiry_date}} </li><br>
+        {% endfor %}
+    </ul>
+
+    <a href="{%url 'view-addItem' %}">Add new item</a>
+</body>
+</html>

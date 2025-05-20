@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Item</title>
+    <style>
+        .msg-error {
+            color: red;
+            font-weight: bold;
+        }
+        .msg-success {
+            color: green;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <form method="post">
+    {% csrf_token %}
+        <fieldset>
+            <legend><h1>Add item to inventory</h1></legend>
+
+            {% if messages %}
+                <ul>
+                    {% for message in messages %}
+                        <li class="msg-{{ message.tags }}">{{ message }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+
+            <label for="ingredName"> Name of ingredient: </label>
+            <input type="text" name="ingredName" id="ingredName"><br>
+            <label for="ingredAmount"> Amount of ingredient: </label>
+            <input type="text" name="ingredAmount" id="ingredAmount"><br>
+            <label > Unit of ingredient </label> <br>
+            <input type="radio" id="Litre" name="unitName" value="Litre">
+            <label for="Litre"> Litre </label> <br>
+            <input type="radio" id="Kilogram" name="unitName" value="Kilogram">
+            <label for="Kilogram"> Kilogram </label> <br>
+            <input type="radio" id="Unit" name="unitName" value="Unit">
+            <label for="Unit"> Unit </label> <br>
+            <label for="expireDate"> Choose estimated expiry date: </label>
+            <input type="date" id="expireDate" name="expireDate">
+        </fieldset>
+        <input type="submit" value="Submit">
+    </form>
+</body>
+</html>

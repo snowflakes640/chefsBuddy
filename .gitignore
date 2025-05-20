@@ -1,0 +1,14 @@
+# Byte-compiled files
+__pycache__/
+*.py[cod]
+
+# Django
+db.sqlite3
+*.log
+.env
+
+# VS Code
+.vscode/
+
+# Virtual environment
+.venv/
