@@ -1,7 +1,9 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.utils import timezone
+from rest_framework import viewsets
 from .models import InventoryDB
+from .serializers import InventorySerializer
 
 def addItem(request):
     context = {}
@@ -48,3 +50,7 @@ def showInventory(request):
     }
 
     return render(request, "inventory\showInventory.html", context)
+
+class InventoryViewSet(viewsets.ModelViewSet):
+    queryset = InventoryDB.objects.all()
+    serializer_class = InventorySerializer
