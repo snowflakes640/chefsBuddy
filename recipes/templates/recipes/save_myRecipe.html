@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>save my recipe</title>
+</head>
+<body>
+    <form method="post">
+        {% csrf_token %}
+        <label for="title"> Name of the recipe: </label>
+        <input type="text" name="title" id="title"/> <br>
+        <fieldset>
+            <legend> About the recipe </legend>
+            <label for="rating"> Rate the recipe: </label>
+            <input type="number" name="rating" id="rating"/> <br>
+            
+            <label for="category">Select category: </label>
+            <select name="category" id="category">
+                <option value="Main Dishes">Main Dishes </option>
+                <option value="Side Dish">Side Dish</option>
+                <option value="Meat and Poultry">Meat and Poultry</option>
+                <option value="BBQ & Grilling">BBQ & Grilling</option>
+                <option value="Seafood">Seafood</option>
+                <option value="Salad">Salad</option>
+                <option value="Soups & stew">Soups & stew</option>
+                <option value="Fruits and Vegetables">Fruits and Vegetables</option>
+                <option value="Appetizers and Snacks">Appetizers and Snacks</option>
+                <option value="Breakfast and Brunch">Breakfast and Brunch</option>
+                <option value="Everyday Cooking">Everyday Cooking</option>
+                <option value="Bread">Bread</option>
+                <option value="Drinks Recipes">Drinks Recipes </option>
+                <option value="Desserts">Desserts </option>
+        </select> <br>
+        
+        <label for="prepTime"> Estimated preparation time: </label>
+        <input type="text" name="prepTime" id="prepTime"/> <br>
+        <label for="servings"> Servings: </label>
+        <input type="number" name="servings" id="servings"/> <br>
+        <label for="recipeURL"> Recipe URL: </label>
+        <input type="text" name="recipeURL" id="recipeURL"/> <br>
+    </fieldset>
+    <fieldset>
+        <legend> Recipe Details </legend>
+        <label for="ingredients"> Necessary ingredients: </label>
+        <textarea name="ingredients" id="ingredients" rows="3" cols="50"></textarea> <br>
+        <label for="instructions"> Steps to follow: </label>
+        <textarea name="instructions" id="instructions" rows="10" cols="50"/></textarea> <br>
+    </fieldset>
+    <button type="submit">Save</button>
+    </form>
+    
+</body>
+</html>

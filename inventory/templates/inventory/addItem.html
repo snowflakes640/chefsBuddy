@@ -20,7 +20,7 @@
     {% csrf_token %}
         <fieldset>
             <legend><h1>Add item to inventory</h1></legend>
-
+            
             {% if messages %}
                 <ul>
                     {% for message in messages %}
@@ -43,7 +43,8 @@
             <label for="expireDate"> Choose estimated expiry date: </label>
             <input type="date" id="expireDate" name="expireDate">
         </fieldset>
-        <input type="submit" value="Submit">
+        <!-- <input type="submit" value="Submit"> -->
+        <button type="submit"> Submit </button>
     </form>
 </body>
 </html>

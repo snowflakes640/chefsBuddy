@@ -5,7 +5,7 @@ class RecipesDB(models.Model):
     title = models.CharField(max_length=100, blank = True, null = True)
     rating = models.FloatField(blank=True, null=True)
     category_path = models.CharField(max_length=100, blank=True, null=True)
-    prep_time = models.IntegerField(blank=True, null=True)
+    prep_time = models.CharField(max_length=20, blank=True, null=True)
     servings = models.IntegerField(blank=True, null=True)
     ingredients = models.CharField(max_length=2000, blank = True, null = True)
     instructions = models.CharField(max_length=5000, blank = False, null = True)
