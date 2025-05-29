@@ -10,15 +10,20 @@ class Command(BaseCommand):
             reader = csv.DictReader(csvfile)
             for row in reader:
                 title = row.get("recipe_name")
-                prep_time = row.get("total_time")  # or adjust as needed
+                cuisine_path = row.get("cuisine_path").lstrip("/").split("/")
+                category = cuisine_path[0]
+                # print(f"category = {category}")
+
+                instructions = row.get("directions").strip(" ").split(".")
+                # print(instructions[0])
 
                 # Find the recipe by title
                 try:
                     recipes = RecipesDB.objects.filter(title=title)
                     for recipe in recipes:
-                        recipe.prep_time = prep_time
+                        recipe.category = category
+                        recipe.instructions = instructions
                         recipe.save()
-                    self.stdout.write(self.style.SUCCESS(f"Updated prep_time for {title}"))
                 except RecipesDB.DoesNotExist:
                     self.stdout.write(self.style.WARNING(f"Recipe not found: {title}"))
 

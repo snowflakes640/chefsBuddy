@@ -5,14 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Show Recipe</title>
 </head>
-<body>
-    
+<body>    
     {% for recipe in recipeData %}
-        <h1>
+        <h3>
             {{recipe.title}}
-        </h1>
-        <p> {{recipe.ingredient}} </p>
-        <p> {{recipe.instructions}} </p>
+        </h3>
+        <p> {{recipe.numeric_id}} </p>
+        <a href="{% url 'extRecipe_details' recipe.numeric_id %}">Details</a>
+        {% empty %}
+        <p>No recipes found.</p>
     {% endfor %}
 </body>
 </html>

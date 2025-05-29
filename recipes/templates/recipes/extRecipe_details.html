@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Show Recipe</title>
+</head>
+<body>
+    <h3> {{recipe.title}} </h3>
+    <p> {{recipe.canonical_id}} </p>
+    {% for step in recipe.instructions %}
+    <ul>
+        <li> {{step.display_text}} </li>
+    </ul>
+    {% endfor %}
+
+    {% empty %}
+        <p>No recipes found.</p>
+    {% endfor %}
+</body>
+</html>

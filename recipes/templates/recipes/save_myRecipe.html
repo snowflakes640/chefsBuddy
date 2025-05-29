@@ -6,6 +6,13 @@
     <title>save my recipe</title>
 </head>
 <body>
+    {% if messages %}
+    <ul>
+        {% for message in messages %}
+        <li class="msg-{{ message.tags }}">{{ message }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
     <form method="post">
         {% csrf_token %}
         <label for="title"> Name of the recipe: </label>
@@ -15,7 +22,7 @@
             <label for="rating"> Rate the recipe: </label>
             <input type="number" name="rating" id="rating"/> <br>
             
-            <label for="category">Select category: </label>
+            <label for="category"> Select category: </label>
             <select name="category" id="category">
                 <option value="Main Dishes">Main Dishes </option>
                 <option value="Side Dish">Side Dish</option>
@@ -33,8 +40,8 @@
                 <option value="Desserts">Desserts </option>
         </select> <br>
         
-        <label for="prepTime"> Estimated preparation time: </label>
-        <input type="text" name="prepTime" id="prepTime"/> <br>
+        <label for="prep_time"> Estimated preparation time: </label>
+        <input type="text" name="prep_time" id="prep_time"/> <br>
         <label for="servings"> Servings: </label>
         <input type="number" name="servings" id="servings"/> <br>
         <label for="recipeURL"> Recipe URL: </label>

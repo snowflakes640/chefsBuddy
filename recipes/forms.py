@@ -7,7 +7,7 @@ class SaveRecipeForm(forms.ModelForm):
         fields = [
             'title',
             'rating',
-            'category_path',
+            'category',
             'prep_time',
             'servings',
             'recipe_url',
@@ -49,7 +49,7 @@ class SaveRecipeForm(forms.ModelForm):
         })
     )
 
-    category_path = forms.ChoiceField(
+    category = forms.ChoiceField(
         label="Select category",
         choices=[
             ("Main Dishes", "Main Dishes"),
@@ -74,12 +74,12 @@ class SaveRecipeForm(forms.ModelForm):
         })
     )
 
-    prep_time = forms.IntegerField(
+    prep_time = forms.CharField(
         label="Estimated preparation time",
         required=False,
         widget=forms.TextInput(attrs={
-            'id': 'prepTime',
-            'name': 'prepTime'
+            'id': 'prep_time',
+            'name': 'prep_time'
         })
     )
 
