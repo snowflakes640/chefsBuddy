@@ -11,5 +11,6 @@ urlpatterns = [
     path("myDB/list", int_recipe_list, name="view_int_recipe_list"),
     path("myDB/details/<int:recipe_id>/", recipe_details, name="recipe_details"),
     path("myDB/saveRecipe/", save_myRecipe, name="save_myRecipe"),
+    path("mergedList/", merge_both_list, name="view_both_list")
     
 ]

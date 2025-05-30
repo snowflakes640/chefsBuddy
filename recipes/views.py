@@ -44,6 +44,9 @@ def ext_recipe_list(request):
     # print(recipeData[0]["instructions"][0]["display_text"])
     return render(request, "recipes/extRecipeList.html", {"recipeData": recipeData})
 
+def merge_both_list(request, ):
+    pass
+
 def extRecipe_details(request, recipe_id):
     
     params = {
@@ -54,7 +57,7 @@ def extRecipe_details(request, recipe_id):
     title = slug.replace("-", " ")
     response_data["title"] = title
 
-    return render(request, "recipes/extRrecipe_details.html", {"recipe": response_data})
+    return render(request, "recipes/extRecipe_details.html", {"recipe": response_data})
 
 ## Internal DB
 def search_recipe(request):
