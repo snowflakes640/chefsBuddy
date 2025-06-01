@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Show Recipe</title>
+</head>
+<body>
+    <fieldset> 
+        <legend>
+            <h2>Recipes from both</h2> 
+        </legend>
+            <ul>
+                {% for recipe in recipe_list %}
+                <li><h4>{{ recipe.title }}</h4></li>
+                <p>source: {{ recipe.source }}</p>
+                <a href="{% url 'extRecipe_details' recipe.id %}" > Details </a>
+                {% empty %}
+                <li>No external recipes found.</li>
+                {% endfor %}
+            </ul>
+    </fieldset>
+    
+    <!-- <fieldset> 
+        <legend>
+            <h2>Recipes from API</h2> 
+        </legend>
+            <ul>
+                {% for recipe in cleaned_extAPI_data %}
+                <li><h4>{{ recipe.title }}</h4></li>
+                <p>ID: {{ recipe.id }}</p>
+                <a href="{% url 'extRecipe_details' recipe.id %}" > Details </a>
+                {% empty %}
+                <li>No external recipes found.</li>
+                {% endfor %}
+            </ul>
+    </fieldset>
+
+    <fieldset>
+        <legend>
+            <h2>Recipes from myDB</h2>
+        </legend>
+    
+        <ul>
+            {% for recipe in dbRecipe_data %}
+            <li><h4>{{ recipe.title }}</h4></li>
+            <p>ID: {{ recipe.id }}</p>
+            <a href="{% url 'recipe_details' recipe.id %}"> Details </a>
+            {% empty %}
+            <li>No database recipes found.</li>
+            {% endfor %}
+        </ul>
+    </fieldset> -->
+</body>
+</html>

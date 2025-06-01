@@ -6,13 +6,27 @@
     <title>Show Recipe</title>
 </head>
 <body>
-    <h3> {{recipe.title}} </h3>
-    <p> {{recipe.canonical_id}} </p>
-    {% for step in recipe.instructions %}
-    <ul>
-        <li> {{step.display_text}} </li>
-    </ul>
+    {% for recipe in recipeDetail %}
+        <h3> {{recipe.title}} </h3>
+        <p> {{recipe.source}} </p>
+        <p>
+            Rating: {{recipe.rating}}<br><br>
+            Categroy: {{recipe.category}}<br><br>
+            Estimated preparation time: {{recipe.prep_time}}<br><br>
+            Servings for: {{recipe.servings}}<br>
+        </p>
+        <p>Ingredients:
+            {{recipe.ingredients}} </p>
+        <p>Instructions:
+            {% for step in recipe.instructions %}
+            <ul>
+                <li> {{step}} </li>
+            </ul>
+            {% endfor %}
+        </p>
+        <p>recipe_url: {{recipe.recipe_url}} </p>
     {% endfor %}
+
 
 </body>
 </html>

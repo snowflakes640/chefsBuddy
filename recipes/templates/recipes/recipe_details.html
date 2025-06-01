@@ -6,8 +6,28 @@
     <title>recipe details</title>
 </head>
 <body>
-    <h2> {{ recipe.title }} </h2>
-    <p> {{ recipe.ingredients }} </p>
-    <p> {{ recipe.directions }} </p>
+    <h3> {{recipe.title}} </h3>
+    <p> {{recipe.id}} </p>
+    <p>
+        Rating: {{recipe.rating}}<br><br>
+        Categroy: {{recipe.category}}<br><br>
+        Estimated preparation time: {{recipe.prep_time}}<br><br>
+        Servings for: {{recipe.servings}}<br>
+    </p>
+    <p>Ingredients:
+        {{recipe.ingredients}} </p>
+    <p>Instructions:
+        <!-- <ul>
+            <li> {{recipe.instructions}} </li>
+        </ul> -->
+        <ul>
+        {% for step in instructions %}
+            <li>{{ step }}</li>
+        {% endfor %}
+        </ul>
+    </p>
+    <p>recipe_url: {{recipe.recipe_url}} </p>
+
+
 </body>
 </html>
