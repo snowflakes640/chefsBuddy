@@ -7,59 +7,11 @@ from .forms import SaveRecipeForm
 import json
 import ast
 
-## External API
-def find_recipe(request):
+## search for recipe
+def search_recipe(request):
     return render(request, "recipes/searchAPI.html")
 
-def ext_recipe_list(request):
-    # querystring = {"from":"0","size":"20","tags":"under_30_minutes"}
-    q = request.GET.get("q", "")
-    tags = request.GET.get("tags", "")
-    size = request.GET.get("size", "20")
-    params = {
-        "q": q,
-        "tags": tags,
-        "size": size,
-        "from": "0"
-    }
-    response_data = get_APIrecipe_list(params)
-    recipeData = response_data.get("results", [])
-    for recipe in recipeData:
-        slug = recipe["slug"]
-        title = slug.replace("-", " ")
-        recipe["title"] = title
-
-        canonical_id_full = recipe["canonical_id"]
-        numeric_id = None
-
-        if canonical_id_full and ":" in canonical_id_full:
-            try:
-                numeric_id = canonical_id_full.split(":")[1]
-            except IndexError:
-                print(f"Warning: canonical_id '{canonical_id_full}' unexpected format, cannot split.")
-                numeric_id = None # Or handle appropriately
-        
-        recipe["numeric_id"] = numeric_id
-    # print(recipeData[0]["instructions"][0]["display_text"])
-    return render(request, "recipes/extRecipeList.html", {"recipeData": recipeData})
-
-
-def extRecipe_details(request, recipe_id):  
-
-    id = recipe_id.split(":")
-    if id[0] == "recipe":
-        params = {
-            "id": int(id[1])
-        }
-        response_data = get_APIrecipe_details(params)
-        recipeData_det = [response_data]
-        recipe_details = get_clean_extAPI_data(recipeData_det)
-    
-    else:
-        recipe_details = [get_object_or_404(RecipesDB, id=recipe_id)]
-        
-    return render(request, "recipes/extRecipe_details.html", {"recipeDetail": recipe_details})
-
+#clean API response into myDB schema
 def get_clean_extAPI_data(recipeData):
     cleaned_recipeData = []
 
@@ -133,12 +85,12 @@ def get_clean_extAPI_data(recipeData):
 
     except ValueError:
         print(f"Warning: No recipe found")
-        cleaned_recipeDatad = None # Or handle appropriately
+        cleaned_recipeDatad = None 
 
     return cleaned_recipeData
-        
-def get_merged_list(request):
 
+#get search result from both internal and external db
+def get_merged_list(request):
     #handling ext API
     q = request.GET.get("q", "")
     tags = request.GET.get("tags", "")
@@ -168,30 +120,23 @@ def get_merged_list(request):
     # print(recipeData[0]["instructions"][0]["display_text"])
     return render(request, "recipes/mergedList.html", {"recipe_list": merged_list})
 
-def merged_details(request, ):
-    pass
+#get details of the clicked recipe
+def merged_recipe_details(request, recipe_id):  
+    id = recipe_id.split(":")
+    if id[0] == "recipe":
+        params = {
+            "id": int(id[1])
+        }
+        response_data = get_APIrecipe_details(params)
+        recipeData_det = [response_data]
+        recipe_details = get_clean_extAPI_data(recipeData_det)
+    
+    else:
+        recipe_details = [get_object_or_404(RecipesDB, id=recipe_id)]
+        
+    return render(request, "recipes/recipe_details.html", {"recipeDetail": recipe_details})
 
-
-## Internal DB
-def search_recipe(request):
-    return render(request, "recipes/searchRecipe.html")
-
-def int_recipe_list(request):
-    queryString = request.GET.get("queryString", "")
-    recipe_list = RecipesDB.objects.filter(title__icontains=queryString)
-
-    return render(request, "recipes/intRecipe.html", {"recipeData": recipe_list})
-
-# def recipe_details(request, recipe_id):
-#     recipe = get_object_or_404(RecipesDB, id=recipe_id)
-#     # instructions = ast.literal_eval(recipe.instructions)
-#     instructions = ast.literal_eval(recipe.instructions)
-
-#     return render(request, "recipes/recipe_details.html", {"recipe": recipe,
-#                                                            "instructions": instructions})
-
-
-
+#save recipe from user
 def save_myRecipe(request):
     if request.method == "GET":
         form = SaveRecipeForm()
@@ -206,6 +151,61 @@ def save_myRecipe(request):
             messages.error(request, f"Form errors: {form.errors}")
         
     return render(request, "recipes/save_myRecipe.html", {"form":form})
+
+
+
+
+# def ext_recipe_list(request):
+#     # querystring = {"from":"0","size":"20","tags":"under_30_minutes"}
+#     q = request.GET.get("q", "")
+#     tags = request.GET.get("tags", "")
+#     size = request.GET.get("size", "20")
+#     params = {
+#         "q": q,
+#         "tags": tags,
+#         "size": size,
+#         "from": "0"
+#     }
+#     response_data = get_APIrecipe_list(params)
+#     recipeData = response_data.get("results", [])
+#     for recipe in recipeData:
+#         slug = recipe["slug"]
+#         title = slug.replace("-", " ")
+#         recipe["title"] = title
+
+#         canonical_id_full = recipe["canonical_id"]
+#         numeric_id = None
+
+#         if canonical_id_full and ":" in canonical_id_full:
+#             try:
+#                 numeric_id = canonical_id_full.split(":")[1]
+#             except IndexError:
+#                 print(f"Warning: canonical_id '{canonical_id_full}' unexpected format, cannot split.")
+#                 numeric_id = None # Or handle appropriately
+        
+#         recipe["numeric_id"] = numeric_id
+#     # print(recipeData[0]["instructions"][0]["display_text"])
+#     return render(request, "recipes/extRecipeList.html", {"recipeData": recipeData})
+
+
+## Internal DB
+# def search_recipe(request):
+#     return render(request, "recipes/searchRecipe.html")
+
+# def int_recipe_list(request):
+#     queryString = request.GET.get("queryString", "")
+#     recipe_list = RecipesDB.objects.filter(title__icontains=queryString)
+
+#     return render(request, "recipes/intRecipe.html", {"recipeData": recipe_list})
+
+# def recipe_details(request, recipe_id):
+#     recipe = get_object_or_404(RecipesDB, id=recipe_id)
+#     # instructions = ast.literal_eval(recipe.instructions)
+#     instructions = ast.literal_eval(recipe.instructions)
+
+#     return render(request, "recipes/recipe_details.html", {"recipe": recipe,
+#                                                            "instructions": instructions})
+
 
 
 

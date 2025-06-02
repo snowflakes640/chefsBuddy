@@ -3,30 +3,29 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>recipe details</title>
+    <title>Show Recipe</title>
 </head>
 <body>
-    <h3> {{recipe.title}} </h3>
-    <p> {{recipe.id}} </p>
-    <p>
-        Rating: {{recipe.rating}}<br><br>
-        Categroy: {{recipe.category}}<br><br>
-        Estimated preparation time: {{recipe.prep_time}}<br><br>
-        Servings for: {{recipe.servings}}<br>
-    </p>
-    <p>Ingredients:
-        {{recipe.ingredients}} </p>
-    <p>Instructions:
-        <!-- <ul>
-            <li> {{recipe.instructions}} </li>
-        </ul> -->
-        <ul>
-        {% for step in instructions %}
-            <li>{{ step }}</li>
-        {% endfor %}
-        </ul>
-    </p>
-    <p>recipe_url: {{recipe.recipe_url}} </p>
+    {% for recipe in recipeDetail %}
+        <h3> {{recipe.title}} </h3>
+        <p> {{recipe.source}} </p>
+        <p>
+            Rating: {{recipe.rating}}<br><br>
+            Categroy: {{recipe.category}}<br><br>
+            Estimated preparation time: {{recipe.prep_time}}<br><br>
+            Servings for: {{recipe.servings}}<br>
+        </p>
+        <p>Ingredients:
+            {{recipe.ingredients}} </p>
+        <p>Instructions:
+            {% for step in recipe.instructions %}
+            <ul>
+                <li> {{step}} </li>
+            </ul>
+            {% endfor %}
+        </p>
+        <p>recipe_url: {{recipe.recipe_url}} </p>
+    {% endfor %}
 
 
 </body>

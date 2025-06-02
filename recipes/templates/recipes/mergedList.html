@@ -14,7 +14,7 @@
                 {% for recipe in recipe_list %}
                 <li><h4>{{ recipe.title }}</h4></li>
                 <p>source: {{ recipe.source }}</p>
-                <a href="{% url 'extRecipe_details' recipe.id %}" > Details </a>
+                <a href="{% url 'merged_recipe_details' recipe.id %}" > Details </a>
                 {% empty %}
                 <li>No external recipes found.</li>
                 {% endfor %}
