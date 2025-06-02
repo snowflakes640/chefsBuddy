@@ -9,5 +9,5 @@ urlpatterns = [
     path("", showInventory, name="view-inventory"),
     path('add', addItem, name="view-addItem"),
     path("", include(router.urls)),
-    path("api-auth/", include("rest_framework.urls"))
+    # path("api-auth/", include("rest_framework.urls"))
 ]

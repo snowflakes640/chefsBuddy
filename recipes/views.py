@@ -4,8 +4,81 @@ from django.shortcuts import render, get_object_or_404
 from .services import get_APIrecipe_details, get_APIrecipe_list
 from .models import RecipesDB
 from .forms import SaveRecipeForm
-import json
-import ast
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
+from rest_framework import status
+from .serializers import CustomDataSerializer, SaveRecipeSerializer
+
+
+@api_view(["GET"])
+def get_merged_list_API(request):
+    q = request.GET.get("q", "")
+    tags = request.GET.get("tags", "")
+    size = request.GET.get("size", "10")
+    params = {
+        "q": q,
+        "tags": tags,
+        "size": size,
+        "from": "0"
+    }
+    response_data = get_APIrecipe_list(params)
+    recipeData = response_data.get("results", [])
+    cleaned_extAPI_data = get_clean_extAPI_data(recipeData)
+
+    #handling internal db
+    db_response_data = RecipesDB.objects.filter(title__icontains = q)[:10]
+    dbRecipe_data = list(db_response_data)
+    
+    merged_list =  dbRecipe_data + cleaned_extAPI_data
+    serializer = CustomDataSerializer(merged_list, many=True)
+
+    return Response(serializer.data)
+
+@api_view(["GET"])
+def recipe_details_API(request, recipe_id):  
+    id = recipe_id.split(":")
+    if id[0] == "recipe":
+        params = {
+            "id": int(id[1])
+        }
+        response_data = get_APIrecipe_details(params)
+        recipeData_det = [response_data]
+        recipe_details = get_clean_extAPI_data(recipeData_det)
+    else:
+        recipe_details = [get_object_or_404(RecipesDB, id=recipe_id)]
+
+    serializer = CustomDataSerializer(recipe_details, many=True)   
+    return Response(serializer.data)
+
+@api_view(["GET", "POST"])
+def save_myRecipe_API(request):
+
+    if request.method == "GET":
+        #providing an empty serializer like an empty form
+        serializer = SaveRecipeSerializer()
+        return Response(serializer.data)
+
+    elif request.method == "POST":
+        serializer = SaveRecipeSerializer(data = request.data)
+        if serializer.is_valid():
+            recipe = serializer.save()
+            recipe_title = serializer.get("title")
+            return Response(
+                {
+                    "message": f"The recipe for '{recipe_title}' has been successfully saved!",
+                    "recipe": SaveRecipeSerializer(recipe).data
+                }, status=status.HTTP_201_CREATED
+            )
+            
+        else:
+            return Response(
+                {
+                    "message": "Error in submission",
+                    "errors": serializer.errors
+                }, status=status.HTTP_400_BAD_REQUEST
+            )
+        
+
 
 ## search for recipe
 def search_recipe(request):
