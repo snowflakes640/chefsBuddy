@@ -8,6 +8,7 @@ from .models import RecipesDB
 #                   "ingredients", "instructions", "source", "recipe_url")
         
 class CustomDataSerializer(serializers.Serializer):
+    id = serializers.CharField()
     title = serializers.CharField()
     rating = serializers.FloatField()
     category = serializers.CharField()

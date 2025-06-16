@@ -30,4 +30,4 @@ For backend I am using Django. Initially these are my steps:
 	- [x] Showing recipes w search words
 	- [x] Showing recipe details when clicked
 
-- [ ] Turning this whole thing into a backend endpoint
+- [x] Turning this whole thing into a backend endpoint

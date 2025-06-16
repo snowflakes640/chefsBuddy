@@ -1,0 +1,33 @@
+import './App.css'
+import {BrowserRouter as Router, Routes, Route} from "react-router-dom"
+import Inventory from './pages/inventory'
+import Navbar from "./components/Navbar"
+import AddItem from "./pages/AddItem"
+import NotFound from './pages/NotFound'
+import SearchRecipe from './pages/searchRecipe'
+import RecipeDetails from './pages/RecipeDetails'
+
+function App() {
+
+  return (
+    <Router>
+      <div>
+        <Navbar />
+
+        <div>
+          <Routes>
+
+            <Route path = "/" element={<Inventory />} />
+            <Route path = "/addItem" element={<AddItem />} />
+            <Route path = "/recipe/search" element={<SearchRecipe />} />
+            <Route path= "/recipe/details/:id" element={<RecipeDetails />} />
+            <Route path = "*" element={<NotFound />} />
+
+          </Routes>
+        </div>
+      </div>
+    </Router>
+  )
+}
+
+export default App
