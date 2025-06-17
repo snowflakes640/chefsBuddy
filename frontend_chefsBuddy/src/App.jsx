@@ -6,6 +6,7 @@ import AddItem from "./pages/AddItem"
 import NotFound from './pages/NotFound'
 import SearchRecipe from './pages/searchRecipe'
 import RecipeDetails from './pages/RecipeDetails'
+import SaveRecipe from './pages/SaveRecipe'
 
 function App() {
 
@@ -21,6 +22,7 @@ function App() {
             <Route path = "/addItem" element={<AddItem />} />
             <Route path = "/recipe/search" element={<SearchRecipe />} />
             <Route path= "/recipe/details/:id" element={<RecipeDetails />} />
+            <Route path= "/recipe/saveRecipe" element={<SaveRecipe />} />
             <Route path = "*" element={<NotFound />} />
 
           </Routes>

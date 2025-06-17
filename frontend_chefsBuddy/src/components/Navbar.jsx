@@ -29,7 +29,7 @@ export default function Navbar() {
             
             <Button component={RouterLink} to="/" color="inherit">Home</Button>
             <Button component={RouterLink} to="/addItem" color="inherit">Add Item</Button>
-            <Button component={RouterLink} to="#" color="inherit">Save Recipe</Button>
+            <Button component={RouterLink} to="/recipe/saveRecipe" color="inherit">Save Recipe</Button>
             <Button component={RouterLink} to="/recipe/search" color="inherit">Search Recipe</Button>
         </Toolbar>
       </AppBar>

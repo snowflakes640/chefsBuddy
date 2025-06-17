@@ -11,15 +11,15 @@ User should be able to:
 At the end it should have a clean
 - Backend (Django)
 - Recommendation System (donno yet)
-- Frontend (React) (hopefully)
+- Frontend (React) (MUI)
 
-For backend I am using Django. Initially these are my steps:
+For **backend**, initially these are my steps:
 - [ ] Managing the inventory
-	- [x] Creating page to add and update inventory
+	- [x] Creating form to add and update inventory
 	- [x] Showcasing the current inventory
 	- [x] Showing messages for success and error
 	- [ ] Deleting any item
-- [x] Connecting to external DBMS (MySQL80)
+- [x] Connecting to external DBMS (MySQL80) and prepopulating them with collected database
 - [x] Getting recipe from API 
 	- [x] Integrating the API
 	- [x] Showing recipes w search words
@@ -29,5 +29,25 @@ For backend I am using Django. Initially these are my steps:
 	- [x] Store them in database
 	- [x] Showing recipes w search words
 	- [x] Showing recipe details when clicked
+- [x] Merging the recipe sources
+	- [x] Cleaning the external API data into native database schema
+	- [x] Merging both the search lists together for the user to get results from both sources
+- [x] Creating endpoint for 
+	- [x] Showing inventory
+	- [x] Adding new item
+	- [x] Saving recipe
+	- [x] Showing searched recipes
 
-- [x] Turning this whole thing into a backend endpoint
+- [ ] Creating authentication system for multiple users
+
+---	
+For **Frontend**, tried to keep it simple:
+	- [x] Creating separated page for adding item and recipes, showing inventory and search results
+	- [x] Maintaining a theme for the whole app using MUI
+
+---
+Thinking of implementing **ML system** here
+- [ ] Creating a recsystem for user based, inventory-wise recipe
+
+---
+- [ ] Extended plans:

@@ -46,82 +46,29 @@ const AddItem = () => {
         };
 
         try{
-            await axios.post(BASE_URL + "inventory/", submissionData)
-            alert("Item added to inventory~")
+            const backEndResponse = await axios.post(BASE_URL + "inventory/", submissionData)
+            console.log("Submitting formData:", submissionData);
+            console.log(backEndResponse)
             setFormData({
-                name: "",
-                quantity: "",
-                unit: "",
-                expiry_date: null
+              name: "",
+              quantity: "",
+              unit: "",
+              expiry_date: null
             })
+            alert("Item info saved to inventory")
+            // if (backEndResponse.status === 201) {
+            //   alert("Item added to inventory!"); // New item added
+            // } else if (backEndResponse.status === 200) {
+            //   alert("Item info updated!"); // Existing item updated
+            // }
         } catch(error) {
             alert("Error:" + error.message)
 
         }
     }
     return (
-        // <form onSubmit={handleSubmit}>
-
-        // <legend><h1>Add item to inventory</h1></legend>
-
-        // <label htmlFor="ingredName"> Name of ingredient: </label>
-        // <input 
-        // type="text" 
-        // name="name" 
-        // id="ingredName"
-        // value = {formData.name}
-        // onChange={handleInfoChange}
-        // /> <br />
-        
-        // <label htmlFor="ingredAmount"> Amount of ingredient: </label>
-        // <input 
-        // type="text" 
-        // name="quantity" 
-        // id="ingredAmount"
-        // value = {formData.quantity}
-        // onChange={handleInfoChange}
-        // /> <br />
-
-        // <label > Unit of ingredient: </label> <br/>
-        // <input
-        // type="radio"
-        // id="Litre"
-        // name="unit"
-        // value="Litre"
-        // checked={formData.unit === "Litre"}
-        // onChange={handleInfoChange}/>
-
-        // <label htmlFor="Litre"> Litre </label> <br/>
-        // <input 
-        // type="radio"
-        // id="Kilogram"
-        // name="unit"
-        // value="Kilogram"
-        // checked={formData.unit === "Kilogram"}
-        // onChange={handleInfoChange}/>
-        
-        // <label htmlFor="Kilogram"> Kilogram </label> <br/>
-        // <input 
-        // type="radio"
-        // id="Unit"
-        // name="unit"
-        // value="Unit"
-        // checked={formData.unit === "Unit"}
-        // onChange={handleInfoChange}/>
-        
-        // <label htmlFor="Unit"> Unit </label> <br/>
-        
-        // <label htmlFor="expireDate"> Choose estimated expiry date: </label>
-        // <input 
-        // type="date"
-        // id="expireDate"
-        // name="expiry_date"
-        // value={formData.expiry_date}
-        // defaultValue = "Not applied"
-        // onChange={handleInfoChange}/> <br /> <br />
-        // </form>
-
-    
+      
+      
       <Container maxWidth="md" sx={{ mt: 5 }}>
       <Paper elevation={2} sx={{ padding: 4 }}>
         <Typography gutterBottom variant="h4" align="center">
@@ -132,18 +79,18 @@ const AddItem = () => {
           <Stack spacing={2}>
             <TextField
               fullWidth
-              id="ingredName"
+              id="name"
               label="Ingredient Name"
               name="name"
               variant="outlined"
               value={formData.name}
               onChange={handleInfoChange}
               required
-            />
+              />
 
             <TextField
               fullWidth
-              id="ingredAmount"
+              id="quantity"
               label="Ingredient Amount"
               type="number"
               name="quantity"
@@ -152,7 +99,7 @@ const AddItem = () => {
               onChange={handleInfoChange}
               inputProps={{ min: 0}}
               required
-            />
+              />
 
             <FormControl>
               <FormLabel>Choose Ingredient Unit</FormLabel>
@@ -160,7 +107,7 @@ const AddItem = () => {
                 name="unit"
                 value={formData.unit}
                 onChange={handleInfoChange}
-              >
+                >
                 <FormControlLabel value="Unit" control={<Radio />} label="Unit" />
                 <FormControlLabel value="Kilogram" control={<Radio />} label="Kilogram" />
                 <FormControlLabel value="Litre" control={<Radio />} label="Litre" />
@@ -188,8 +135,68 @@ const AddItem = () => {
       </Paper>
     </Container>
 
-    
-    )
-}
 
-export default AddItem
+    )
+  }
+
+  export default AddItem
+  // <form onSubmit={handleSubmit}>
+  
+  // <legend><h1>Add item to inventory</h1></legend>
+  
+  // <label htmlFor="ingredName"> Name of ingredient: </label>
+  // <input 
+  // type="text" 
+  // name="name" 
+  // id="ingredName"
+  // value = {formData.name}
+  // onChange={handleInfoChange}
+  // /> <br />
+  
+  // <label htmlFor="ingredAmount"> Amount of ingredient: </label>
+  // <input 
+  // type="text" 
+  // name="quantity" 
+  // id="ingredAmount"
+  // value = {formData.quantity}
+  // onChange={handleInfoChange}
+  // /> <br />
+  
+  // <label > Unit of ingredient: </label> <br/>
+  // <input
+  // type="radio"
+  // id="Litre"
+  // name="unit"
+  // value="Litre"
+  // checked={formData.unit === "Litre"}
+  // onChange={handleInfoChange}/>
+  
+  // <label htmlFor="Litre"> Litre </label> <br/>
+  // <input 
+  // type="radio"
+  // id="Kilogram"
+  // name="unit"
+  // value="Kilogram"
+  // checked={formData.unit === "Kilogram"}
+  // onChange={handleInfoChange}/>
+  
+  // <label htmlFor="Kilogram"> Kilogram </label> <br/>
+  // <input 
+  // type="radio"
+  // id="Unit"
+  // name="unit"
+  // value="Unit"
+  // checked={formData.unit === "Unit"}
+  // onChange={handleInfoChange}/>
+  
+  // <label htmlFor="Unit"> Unit </label> <br/>
+  
+  // <label htmlFor="expireDate"> Choose estimated expiry date: </label>
+  // <input 
+  // type="date"
+  // id="expireDate"
+  // name="expiry_date"
+  // value={formData.expiry_date}
+  // defaultValue = "Not applied"
+  // onChange={handleInfoChange}/> <br /> <br />
+  // </form>

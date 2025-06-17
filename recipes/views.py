@@ -62,7 +62,8 @@ def save_myRecipe_API(request):
         serializer = SaveRecipeSerializer(data = request.data)
         if serializer.is_valid():
             recipe = serializer.save()
-            recipe_title = serializer.get("title")
+            # recipe_title = serializer.get("title")
+            recipe_title = recipe.title
             return Response(
                 {
                     "message": f"The recipe for '{recipe_title}' has been successfully saved!",
@@ -71,6 +72,7 @@ def save_myRecipe_API(request):
             )
             
         else:
+            print(serializer.errors)
             return Response(
                 {
                     "message": "Error in submission",
@@ -206,7 +208,6 @@ def merged_recipe_details(request, recipe_id):
     
     else:
         recipe_details = [get_object_or_404(RecipesDB, id=recipe_id)]
-        
     return render(request, "recipes/recipe_details.html", {"recipeDetail": recipe_details})
 
 #save recipe from user

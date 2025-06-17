@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react"
 import axios from "axios"
+import { Box, Typography, List, ListItem, ListItemText } from "@mui/material"
 
 const Inventory = () => { 
     const [data, setData] = useState([])
@@ -26,8 +27,29 @@ const Inventory = () => {
     
     return(
         <>
-            <h1> Currently in inventory: </h1>
-            <ul>
+        <Box sx={{ ml: 10, mt: 8 }}>
+
+            <Typography variant="h3"> Currently in inventory: </Typography>
+            <List sx={{ width: '100%', bgcolor: 'background.paper' }}>
+                {data.map((item) => (
+                    <ListItem key={item.id}>
+                    <ListItemText
+                        primary={
+                            <Typography variant="h5" fontWeight="bold">
+                                {item.name} — {item.quantity} {item.unit}
+                            </Typography>}
+                        secondary={
+                            <Typography variant="subtitle">
+                            Expires on: {item.expiry_date || 'N/A'}<br />
+                            Last stocked on: {item.last_stocked || 'N/A'}
+                        </Typography>
+                        }
+                        />
+                    </ListItem>
+                ))}
+            </List>
+        </Box>
+            {/* <ul>
                 {
                     data.map((item) => (
                                 <li key={item.id}> <strong>{item.name}: </strong> {item.quantity} {item.unit} expires on - {item.expiry_date} <br></br> 
@@ -35,7 +57,7 @@ const Inventory = () => {
                                 <br></br></li>
                     ))
                 }
-            </ul>
+            </ul> */}
     
     </>
     )

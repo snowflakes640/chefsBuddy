@@ -54,3 +54,17 @@ def showInventory(request):
 class InventoryViewSet(viewsets.ModelViewSet):
     queryset = InventoryDB.objects.all()
     serializer_class = InventorySerializer
+
+    def perform_create(self, serializer):
+        name = serializer.validated_data.get("name")
+        item = InventoryDB.objects.filter(name__iexact=name).first()
+
+        if item:
+            item.quantity = serializer.validated_data.get("quantity")
+            item.unit = serializer.validated_data.get("unit")
+            item.last_stocked = timezone.now()
+            item.expiry_date = serializer.validated_data.get("expiry_date")
+            item.save()
+            serializer.instance = item
+        else:
+            serializer.save(last_stocked=timezone.now())

@@ -1,6 +1,6 @@
 import { useState } from "react"
 import axios from "axios"
-import { TextField, Button, Typography, Paper, FormControl, FormLabel, RadioGroup, FormControlLabel, Radio, Container, Stack } from "@mui/material";
+import { Divider, MenuItem, TextField, Button, Typography, Paper, FormControl, FormLabel, RadioGroup, FormControlLabel, Radio, Container, Stack } from "@mui/material";
 import FormGroup from "@mui/material/FormGroup";
 import Checkbox from "@mui/material/Checkbox";;
 
@@ -8,174 +8,239 @@ import Checkbox from "@mui/material/Checkbox";;
 
 
 const SaveRecipe = () => {
-    const BASE_URL = "http://127.0.0.1:8000/api/"
+  const BASE_URL = "http://127.0.0.1:8000/api/"
     // const [message, setMessage] = useState("")
-    const [formData, setFormData] = useState({
-        id: "",
-        title: "",
-        rating: "",
-        category: "",
-        prep_time: "",
-        servings: "",
-        ingredients: "",
-        instructions: "",
-        recipe_url: ""
-
+  const [formData, setFormData] = useState({
+    title: "",
+    rating: "",
+    category: "",
+    prep_time: "",
+    servings: "",
+    ingredients: "",
+    instructions: "",
+    recipe_url: ""
     })
 
-    function handleInfoChange(e) {
-        const {name, value} = e.target
-        setFormData((prev) => ({...prev,
-            [name]: value
-        }))
-    }
 
-    const handleSubmit = async(event) => {
-        event.preventDefault()
-        try{
-            await axios.post(BASE_URL + "recipe/saveRecipe/", submissionData)
-            alert("Your recipe is saved!!!")
-            setFormData({
-                name: "",
-                quantity: "",
-                unit: "",
-                expiry_date: null
-            })
-        } catch(error) {
-            alert("Error:" + error.message)
 
-        }
-    }
+  const categoryList = [
+    {
+      value: 'Meat and Poultry',
+      label: 'Meat & Poultry',
+    },
+    {
+      value: 'BBQ and Grilling',
+      label: 'BBQ & Grill',
+    },
+    {
+      value: 'Seafood',
+      label: 'Seafood',
+    },
+    {
+      value: 'Soups & stew',
+      label: 'Soups & stew',
+    },
+    {
+      value: 'Salad',
+      label: 'Salad',
+    },
+    {
+      value: 'Fruits and Vegetables',
+      label: 'Fruits & Veg',
+    },
+    {
+      value: 'Bread',
+      label: 'Bread',
+    },
+    {
+      value: 'Drinks',
+      label: 'Drinks',
+    },
+    {
+      value: 'Desserts',
+      label: 'Desserts',
+    },
+    {
+      value: 'Main Dish',
+      label: 'Main Dish',
+    },
+    {
+      value: 'Side Dish',
+      label: 'Side Dish',
+    },
+    {
+      value: 'Appetizers and Snacks',
+      label: 'Appetizers & Snacks',
+    },
+    {
+      value: 'Breakfast and Brunch',
+      label: 'Breakfast & Brunch',
+    },
+    {
+      value: 'Everyday Cooking',
+      label: 'Everyday Cooking',
+    },
+  ]
+
+  function handleInfoChange(e) {
+      const {name, value} = e.target
+      setFormData((prev) => ({...prev,
+          [name]: value
+      }))
+  }
+
+  const handleSubmit = async (event) => {
+  event.preventDefault();
+
+  try {
+    const validData = {
+      ...formData,
+      rating: formData.rating === "" ? null : parseFloat(formData.rating),
+      servings: formData.servings === "" ? null : parseInt(formData.servings),
+      instructions: formData.instructions
+        .split("\n")
+        .filter(Boolean), // convert multiline string to array
+    };
+
+    await axios.post(BASE_URL + "recipe/saveRecipe/", validData);
+    alert("Your recipe is saved!!!");
+
+    // Reset form
+    setFormData({
+      title: "",
+      rating: "",
+      category: "",
+      prep_time: "",
+      servings: "",
+      ingredients: "",
+      instructions: "",
+      recipe_url: "",
+    });
+  } catch (error) {
+    alert("Error: " + error.message);
+    console.error(error.response?.data || error);
+  }
+};
     return (
-        // <form onSubmit={handleSubmit}>
-
-        // <legend><h1>Add item to inventory</h1></legend>
-
-        // <label htmlFor="ingredName"> Name of ingredient: </label>
-        // <input 
-        // type="text" 
-        // name="name" 
-        // id="ingredName"
-        // value = {formData.name}
-        // onChange={handleInfoChange}
-        // /> <br />
-        
-        // <label htmlFor="ingredAmount"> Amount of ingredient: </label>
-        // <input 
-        // type="text" 
-        // name="quantity" 
-        // id="ingredAmount"
-        // value = {formData.quantity}
-        // onChange={handleInfoChange}
-        // /> <br />
-
-        // <label > Unit of ingredient: </label> <br/>
-        // <input
-        // type="radio"
-        // id="Litre"
-        // name="unit"
-        // value="Litre"
-        // checked={formData.unit === "Litre"}
-        // onChange={handleInfoChange}/>
-
-        // <label htmlFor="Litre"> Litre </label> <br/>
-        // <input 
-        // type="radio"
-        // id="Kilogram"
-        // name="unit"
-        // value="Kilogram"
-        // checked={formData.unit === "Kilogram"}
-        // onChange={handleInfoChange}/>
-        
-        // <label htmlFor="Kilogram"> Kilogram </label> <br/>
-        // <input 
-        // type="radio"
-        // id="Unit"
-        // name="unit"
-        // value="Unit"
-        // checked={formData.unit === "Unit"}
-        // onChange={handleInfoChange}/>
-        
-        // <label htmlFor="Unit"> Unit </label> <br/>
-        
-        // <label htmlFor="expireDate"> Choose estimated expiry date: </label>
-        // <input 
-        // type="date"
-        // id="expireDate"
-        // name="expiry_date"
-        // value={formData.expiry_date}
-        // defaultValue = "Not applied"
-        // onChange={handleInfoChange}/> <br /> <br />
-        // </form>
-
     
       <Container maxWidth="md" sx={{ mt: 5 }}>
       <Paper elevation={2} sx={{ padding: 4 }}>
         <Typography gutterBottom variant="h4" align="center">
-          Add item to your inventory!
+          Save your recipe!
         </Typography>
 
         <form onSubmit={handleSubmit}>
           <Stack spacing={2}>
             <TextField
               fullWidth
-              id="ingredName"
-              label="Ingredient Name"
-              name="name"
+              id="title"
+              label="Name of the recipe"
+              name="title"
               variant="outlined"
-              value={formData.name}
+              value={formData.title}
               onChange={handleInfoChange}
+              required
+            />
+
+            <Divider>About the recipe</Divider>
+
+            <TextField
+              fullWidth
+              id="rating"
+              label="Rate the recipe"
+              type="number"
+              name="rating"
+              variant="outlined"
+              value={formData.rating}
+              onChange={handleInfoChange}
+              inputProps={{ min: 0, max: 5, step: 0.1 }}
+            />
+
+            <TextField
+              fullWidth
+              id="prep_time"
+              label="Estimated preparation time"
+              type="text"
+              name="prep_time"
+              variant="outlined"
+              value={formData.prep_time}
+              onChange={handleInfoChange}
+            />
+
+            <TextField
+              fullWidth
+              id="servings"
+              label="Serving for"
+              type="number"
+              name="servings"
+              variant="outlined"
+              value={formData.servings}
+              onChange={handleInfoChange}
+            />
+
+            <TextField
+              fullWidth
+              id="recipe_url"
+              label="Original source link"
+              type="text"
+              name="recipe_url"
+              variant="outlined"
+              value={formData.recipe_url}
+              onChange={handleInfoChange}
+            />
+
+            <TextField
+            id="category"
+            select
+            name="category"
+            label="Choose a category"
+            defaultValue="Main Dish"
+            >
+            {categoryList.map((option) => (
+              <MenuItem key={option.value} value={option.value}>
+                {option.label}
+              </MenuItem>
+            ))}
+            </TextField>
+
+            <Divider>Details of the recipe</Divider>
+
+            <TextField
+              fullWidth
+              id="ingredients"
+              label="ingredients"
+              type="text"
+              name="ingredients"
+              variant="outlined"
+              value={formData.ingredients}
+              onChange={handleInfoChange}
+              multiline
+              maxRows={4}
               required
             />
 
             <TextField
               fullWidth
-              id="ingredAmount"
-              label="Ingredient Amount"
-              type="number"
-              name="quantity"
+              id="instructions"
+              label="instructions"
+              type="text"
+              name="instructions"
               variant="outlined"
-              value={formData.quantity}
+              value={formData.instructions}
               onChange={handleInfoChange}
-              inputProps={{ min: 0}}
+              multiline
+              maxRows={35}
               required
             />
 
-            <FormControl>
-              <FormLabel>Choose Ingredient Unit</FormLabel>
-              <RadioGroup
-                name="unit"
-                value={formData.unit}
-                onChange={handleInfoChange}
-              >
-                <FormControlLabel value="Unit" control={<Radio />} label="Unit" />
-                <FormControlLabel value="Kilogram" control={<Radio />} label="Kilogram" />
-                <FormControlLabel value="Litre" control={<Radio />} label="Litre" />
-                <FormControlLabel value="Other" control={<Radio />} label="Other" />
-              </RadioGroup>
-            </FormControl>
 
-            <LocalizationProvider dateAdapter={AdapterDayjs}>
-              <DatePicker
-                id="expireDate"
-                label="Estimated Expiry Date"
-                value={formData.expiry_date}
-                onChange={handleDateChange}
-                slotProps={{
-                  textField: { fullWidth: true, variant: "outlined", name: "expiry_date" }
-                }}
-              />
-            </LocalizationProvider>
-
-            <Button fullWidth type="submit" variant="contained" size="large">
+            <Button fullWidth type="submit" variant="contained" size="medium">
               Save
             </Button>
           </Stack>
         </form>
       </Paper>
-    </Container>
-
-    
+    </Container>    
     )
 }
 
