@@ -1,6 +1,6 @@
 import './App.css'
 import {BrowserRouter as Router, Routes, Route} from "react-router-dom"
-import Inventory from './pages/inventory'
+import Inventory from './pages/Inventory'
 import Navbar from "./components/Navbar"
 import AddItem from "./pages/AddItem"
 import NotFound from './pages/NotFound'
