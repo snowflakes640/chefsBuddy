@@ -4,7 +4,7 @@ import Inventory from './pages/Inventory'
 import Navbar from "./components/Navbar"
 import AddItem from "./pages/AddItem"
 import NotFound from './pages/NotFound'
-import SearchRecipe from './pages/searchRecipe'
+import SearchRecipe from './pages/SearchRecipe'
 import RecipeDetails from './pages/RecipeDetails'
 import SaveRecipe from './pages/SaveRecipe'
 
